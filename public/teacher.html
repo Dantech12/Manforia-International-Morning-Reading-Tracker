@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Manforia Reading Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="cropped-cropped-icon2.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="cropped-cropped-icon2.png" alt="Logo" class="nav-logo">
+            <span>Manforia Reading Tracker - Teacher</span>
+        </div>
+        <div class="nav-actions">
+            <span id="teacherName" class="user-name"></span>
+            <a href="/logout" class="btn btn-secondary">Logout</a>
+        </div>
+        <button class="hamburger" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <img src="cropped-cropped-icon2.png" alt="Logo" style="width: 60px; height: 45px;">
+            <button class="sidebar-close" id="sidebarClose">&times;</button>
+        </div>
+        
+        <div class="sidebar-user-info">
+            <div class="user-name" id="sidebarTeacherName">Teacher</div>
+            <div class="user-role" id="sidebarTeacherClass">Teacher Panel</div>
+        </div>
+        
+        <div class="sidebar-nav">
+            <button class="tab-btn active" onclick="showTabMobile('daily-report')">Daily Report</button>
+            <button class="tab-btn" onclick="showTabMobile('weekly-report')">Weekly Summary</button>
+            <button class="tab-btn" onclick="showTabMobile('my-reports')">My Reports</button>
+            <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;">Logout</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Teacher Profile Section -->
+        <div class="profile-section">
+            <div class="profile-card">
+                <h2>Teacher Profile</h2>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <label>Name:</label>
+                        <span id="profileName"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Assigned Class:</label>
+                        <span id="profileClass"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Current Week:</label>
+                        <span id="currentWeek"></span>
+                    </div>
+                    <div class="info-item">
+                        <label>Month:</label>
+                        <span id="currentMonth"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reading-time-card">
+                <h3>Morning Reading Schedule</h3>
+                <div class="reading-time">
+                    <span class="time">7:00 AM</span>
+                    <span class="description">Daily Morning Reading</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-tabs">
+            <button class="tab-btn active" onclick="showTab('daily-report')">Daily Report</button>
+            <button class="tab-btn" onclick="showTab('weekly-report')">Weekly Summary</button>
+            <button class="tab-btn" onclick="showTab('my-reports')">My Reports</button>
+        </div>
+
+        <!-- Daily Report Tab -->
+        <div id="daily-report-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>Daily Reading Report</h2>
+            </div>
+            
+            <form id="dailyReportForm" class="report-form">
+                <div class="form-group">
+                    <label for="reportDate">Date of Reading</label>
+                    <input type="date" id="reportDate" name="reportDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="materialsUsed">Materials Used for Morning Reading</label>
+                    <textarea id="materialsUsed" name="materialsUsed" rows="3" placeholder="e.g., Storybook: 'The Little Prince', Reading comprehension worksheets..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newWords">New Words Students Learned</label>
+                    <textarea id="newWords" name="newWords" rows="3" placeholder="List the new vocabulary words students encountered and learned..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="comments">Teacher Comments</label>
+                    <textarea id="comments" name="comments" rows="4" placeholder="Any observations, student participation, challenges faced, etc..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit Daily Report</button>
+            </form>
+        </div>
+
+        <!-- Weekly Summary Tab -->
+        <div id="weekly-report-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Weekly Summary Report</h2>
+            </div>
+            
+            <form id="weeklyReportForm" class="report-form">
+                <div class="form-group">
+                    <label for="activeReaders">Active Readers</label>
+                    <textarea id="activeReaders" name="activeReaders" rows="3" placeholder="List students who actively participated in reading activities this week..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studentsNeedingSupport">Students Needing Support</label>
+                    <textarea id="studentsNeedingSupport" name="studentsNeedingSupport" rows="3" placeholder="List students who need additional reading support and specific areas of difficulty..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="commonChallenges">Common Challenges Faced</label>
+                    <textarea id="commonChallenges" name="commonChallenges" rows="3" placeholder="Describe the main challenges encountered during morning reading sessions this week..." required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="strategiesNextWeek">Strategies for Following Week</label>
+                    <textarea id="strategiesNextWeek" name="strategiesNextWeek" rows="3" placeholder="Outline your planned strategies and approaches for next week's reading sessions..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit Weekly Summary</button>
+            </form>
+        </div>
+
+        <!-- My Reports Tab -->
+        <div id="my-reports-tab" class="tab-content">
+            <div class="section-header">
+                <h2>My Reports</h2>
+                <div class="export-buttons">
+                    <button class="btn btn-primary" onclick="exportMyDailyReportsPDF()">Export Daily Reports PDF</button>
+                    <button class="btn btn-primary" onclick="exportMyWeeklyReportsPDF()">Export Weekly Reports PDF</button>
+                </div>
+            </div>
+            
+            <div class="reports-section">
+                <h3>Recent Daily Reports</h3>
+                <div class="table-container">
+                    <table id="myDailyReportsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Materials Used</th>
+                                <th>New Words</th>
+                                <th>Comments</th>
+                                <th>Week</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="reports-section">
+                <h3>Recent Weekly Summaries</h3>
+                <div class="table-container">
+                    <table id="myWeeklyReportsTable" class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Submitted</th>
+                                <th>Week</th>
+                                <th>Active Readers</th>
+                                <th>Support Needed</th>
+                                <th>Challenges</th>
+                                <th>Strategies</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report View Modal -->
+    <div id="reportModal" class="report-modal">
+        <div class="report-modal-content">
+            <div class="report-modal-header">
+                <h2><span class="report-icon" id="reportIcon">📋</span><span id="reportTitle">Report Details</span></h2>
+                <button class="report-close" onclick="closeReportModal()">&times;</button>
+            </div>
+            <div class="report-modal-body">
+                <div class="report-info-grid" id="reportInfoGrid">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <div id="reportContentSections">
+                    <!-- Dynamic content sections will be inserted here -->
+                </div>
+            </div>
+            <div class="report-modal-footer">
+                <div class="report-date-info" id="reportDateInfo">
+                    <!-- Date information will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="teacher.js"></script>
+</body>
+</html>
