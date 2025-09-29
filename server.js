@@ -348,6 +348,21 @@ process.on('SIGTERM', async () => {
     process.exit(0);
 });
 
-// Start the server
-startServer();
+// Initialize database and start server
+async function initializeAndStart() {
+    try {
+        // Try to initialize database if not already done
+        const { initializeDatabase } = require('./init-db');
+        await initializeDatabase();
+        console.log('Database initialization completed successfully!');
+    } catch (error) {
+        console.log('Database may already be initialized or will be initialized later:', error.message);
+    }
+    
+    // Start the server
+    startServer();
+}
+
+// Start the application
+initializeAndStart();
 

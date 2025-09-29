@@ -95,12 +95,12 @@ The application uses these environment variables:
 ### Step 4: Deploy Your Application
 
 1. **Automatic Deployment**:
-   - Railway automatically builds and deploys your app
-   - It detects the Node.js project and runs:
-     - `npm install` (installs dependencies)
-     - `npm run build` (build step)
-     - `npm run postinstall` (initializes database)
-     - `npm start` (starts the server)
+   - Railway automatically builds and deploys your app using Docker
+   - The Dockerfile handles:
+     - Installing Node.js dependencies (`npm install`)
+     - Running the build step (`npm run build`)
+     - Starting the application (`npm start`)
+     - Database initialization happens automatically on first startup
 
 2. **Monitor Deployment**:
    - Watch the build logs in Railway dashboard
