@@ -16,9 +16,6 @@ COPY . .
 # Run build step
 RUN npm run build
 
-# Initialize database (will be skipped if DATABASE_URL not available)
-RUN npm run postinstall || echo "Database initialization skipped - will run on startup"
-
 # Expose port
 EXPOSE 3000
 
