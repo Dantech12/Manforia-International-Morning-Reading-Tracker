@@ -88,11 +88,19 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     
+    console.log(`Login attempt for username: ${username}`);
+    
     try {
         const result = await query('SELECT * FROM teachers WHERE username = $1', [username]);
         const user = result.rows[0];
         
+        console.log(`User found: ${user ? 'Yes' : 'No'}`);
+        if (user) {
+            console.log(`User details: username=${user.username}, assigned_class=${user.assigned_class}`);
+        }
+        
         if (user && await bcrypt.compare(password, user.password_hash)) {
+            console.log('Password verification successful');
             req.session.userId = user.id;
             req.session.username = user.username;
             req.session.fullName = user.full_name;
@@ -102,12 +110,15 @@ app.post('/login', async (req, res) => {
             const isAdmin = user.assigned_class === 'Admin';
             req.session.role = isAdmin ? 'admin' : 'teacher';
             
+            console.log(`User role: ${req.session.role}`);
+            
             if (isAdmin) {
                 res.json({ success: true, redirect: '/admin' });
             } else {
                 res.json({ success: true, redirect: '/teacher' });
             }
         } else {
+            console.log('Login failed: Invalid credentials or password mismatch');
             res.status(401).json({ error: 'Invalid credentials' });
         }
     } catch (error) {

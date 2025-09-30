@@ -54,8 +54,11 @@ async function initializeDatabase() {
         const adminUsername = process.env.ADMIN_USERNAME || 'admin';
         const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
         
+        console.log(`Creating admin user with username: ${adminUsername}`);
+        console.log(`Admin password set: ${adminPassword ? 'Yes' : 'No'}`);
+        
         const existingAdmin = await query(
-            'SELECT id FROM teachers WHERE username = $1',
+            'SELECT id, username, assigned_class FROM teachers WHERE username = $1',
             [adminUsername]
         );
 
@@ -66,9 +69,17 @@ async function initializeDatabase() {
                  VALUES ($1, $2, $3, $4)`,
                 ['Administrator', adminUsername, hashedPassword, 'Admin']
             );
-            console.log(`Admin user created with username: ${adminUsername}`);
+            console.log(`✅ Admin user created successfully with username: ${adminUsername}`);
         } else {
-            console.log('Admin user already exists');
+            console.log(`⚠️ Admin user already exists: ${JSON.stringify(existingAdmin.rows[0])}`);
+            
+            // Update existing admin user with new password if environment variables changed
+            const hashedPassword = await bcrypt.hash(adminPassword, 10);
+            await query(
+                `UPDATE teachers SET password_hash = $1, assigned_class = $2 WHERE username = $3`,
+                [hashedPassword, 'Admin', adminUsername]
+            );
+            console.log(`✅ Admin user password updated for username: ${adminUsername}`);
         }
 
         // Create indexes for better performance
