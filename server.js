@@ -49,9 +49,18 @@ const requireAuth = (req, res, next) => {
 
 // Helper function to check if user is admin
 const requireAdmin = (req, res, next) => {
+    console.log('Admin access check:', {
+        userId: req.session.userId,
+        role: req.session.role,
+        sessionExists: !!req.session,
+        sessionId: req.sessionID
+    });
+    
     if (req.session.userId && req.session.role === 'admin') {
+        console.log('✅ Admin access granted');
         next();
     } else {
+        console.log('❌ Admin access denied - insufficient permissions');
         res.status(403).send('Access denied');
     }
 };
