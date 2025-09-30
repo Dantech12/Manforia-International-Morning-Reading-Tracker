@@ -121,11 +121,20 @@ app.post('/login', async (req, res) => {
             
             console.log(`User role: ${req.session.role}`);
             
-            if (isAdmin) {
-                res.json({ success: true, redirect: '/admin' });
-            } else {
-                res.json({ success: true, redirect: '/teacher' });
-            }
+            // Save session before sending response
+            req.session.save((err) => {
+                if (err) {
+                    console.error('Session save error:', err);
+                    return res.status(500).json({ error: 'Session error' });
+                }
+                
+                console.log('✅ Session saved successfully');
+                if (isAdmin) {
+                    res.json({ success: true, redirect: '/admin' });
+                } else {
+                    res.json({ success: true, redirect: '/teacher' });
+                }
+            });
         } else {
             console.log('Login failed: Invalid credentials or password mismatch');
             res.status(401).json({ error: 'Invalid credentials' });
