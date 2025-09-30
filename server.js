@@ -284,7 +284,20 @@ app.get('/api/teacher/profile', requireAuth, async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ error: 'Teacher not found' });
         }
-        res.json(result.rows[0]);
+        
+        const teacher = result.rows[0];
+        const weekInfo = getCurrentWeekInfo();
+        
+        // Format the response to match frontend expectations
+        const profile = {
+            fullName: teacher.full_name,
+            username: teacher.username,
+            assignedClass: teacher.assigned_class,
+            currentWeek: weekInfo.weekNumber,
+            monthYear: weekInfo.monthYear
+        };
+        
+        res.json(profile);
     } catch (error) {
         console.error('Error fetching teacher profile:', error);
         res.status(500).json({ error: 'Database error' });
