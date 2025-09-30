@@ -8,17 +8,17 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'manforia-reading-tracker-secret-change-in-production',
+    secret: process.env.SESSION_SECRET || 'your-secret-key-here',
     resave: false,
     saveUninitialized: false,
     cookie: { 
-        secure: process.env.NODE_ENV === 'production',
+        secure: false, // Set to false for Railway deployment
+        httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
 }));
