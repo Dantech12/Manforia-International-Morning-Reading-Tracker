@@ -351,12 +351,24 @@ process.on('SIGTERM', async () => {
 // Initialize database and start server
 async function initializeAndStart() {
     try {
+        // Check if DATABASE_URL is available before trying to initialize
+        if (!process.env.DATABASE_URL) {
+            console.error('DATABASE_URL not found. Cannot initialize database.');
+            console.error('Make sure you have added a PostgreSQL database to your Railway project.');
+            process.exit(1);
+        }
+
         // Try to initialize database if not already done
         const { initializeDatabase } = require('./init-db');
         await initializeDatabase();
         console.log('Database initialization completed successfully!');
     } catch (error) {
-        console.log('Database may already be initialized or will be initialized later:', error.message);
+        console.error('Database initialization failed:', error.message);
+        console.error('This usually means:');
+        console.error('1. DATABASE_URL is not set correctly');
+        console.error('2. Database is not accessible');
+        console.error('3. Network connectivity issues');
+        process.exit(1);
     }
     
     // Start the server

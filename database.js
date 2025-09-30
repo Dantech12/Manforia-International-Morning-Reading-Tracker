@@ -1,6 +1,17 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+// Check for DATABASE_URL
+if (!process.env.DATABASE_URL) {
+    console.error('ERROR: DATABASE_URL environment variable is not set!');
+    console.error('Please ensure you have:');
+    console.error('1. Added a PostgreSQL database to your Railway project');
+    console.error('2. The DATABASE_URL variable is automatically set by Railway');
+    process.exit(1);
+}
+
+console.log('DATABASE_URL found, connecting to PostgreSQL...');
+
 // Database configuration
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
