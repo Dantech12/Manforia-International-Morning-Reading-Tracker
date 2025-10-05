@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add event listeners for forms
     document.getElementById('dailyReportForm').addEventListener('submit', handleDailyReportSubmission);
     document.getElementById('weeklyReportForm').addEventListener('submit', handleWeeklyReportSubmission);
+    document.getElementById('changePasswordForm').addEventListener('submit', handlePasswordChange);
     
     // Initialize mobile navigation
     initializeMobileNavigation();
@@ -207,16 +208,63 @@ async function handleWeeklyReportSubmission(e) {
     }
 }
 
+// Handle password change form submission
+async function handlePasswordChange(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const currentPassword = formData.get('currentPassword');
+    const newPassword = formData.get('newPassword');
+    const confirmPassword = formData.get('confirmPassword');
+    
+    // Validate passwords match
+    if (newPassword !== confirmPassword) {
+        alert('New passwords do not match. Please try again.');
+        return;
+    }
+    
+    // Validate password length
+    if (newPassword.length < 6) {
+        alert('New password must be at least 6 characters long.');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/teacher/change-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                currentPassword: currentPassword,
+                newPassword: newPassword
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showSuccessMessage('Password changed successfully!');
+            document.getElementById('changePasswordForm').reset();
+        } else {
+            alert('Error changing password: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Error changing password:', error);
+        alert('Network error. Please try again.');
+    }
+}
+
 // Load teacher's reports
 async function loadMyReports() {
     try {
         // Load daily reports
-        const dailyResponse = await fetch('/api/teacher/reports/daily');
+        const dailyResponse = await fetch('/api/teacher/daily-reports');
         myDailyReports = await dailyResponse.json();
         displayMyDailyReports();
         
         // Load weekly reports
-        const weeklyResponse = await fetch('/api/teacher/reports/weekly');
+        const weeklyResponse = await fetch('/api/teacher/weekly-reports');
         myWeeklyReports = await weeklyResponse.json();
         displayMyWeeklyReports();
     } catch (error) {

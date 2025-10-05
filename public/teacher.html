@@ -45,6 +45,7 @@
             <button class="tab-btn active" onclick="showTabMobile('daily-report')">Daily Report</button>
             <button class="tab-btn" onclick="showTabMobile('weekly-report')">Weekly Summary</button>
             <button class="tab-btn" onclick="showTabMobile('my-reports')">My Reports</button>
+            <button class="tab-btn" onclick="showTabMobile('change-password')">Change Password</button>
             <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;">Logout</a>
         </div>
     </div>
@@ -87,6 +88,7 @@
             <button class="tab-btn active" onclick="showTab('daily-report')">Daily Report</button>
             <button class="tab-btn" onclick="showTab('weekly-report')">Weekly Summary</button>
             <button class="tab-btn" onclick="showTab('my-reports')">My Reports</button>
+            <button class="tab-btn" onclick="showTab('change-password')">Change Password</button>
         </div>
 
         <!-- Daily Report Tab -->
@@ -199,6 +201,34 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <!-- Change Password Tab -->
+        <div id="change-password-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Change Password</h2>
+                <p>Update your account password for security</p>
+            </div>
+            
+            <form id="changePasswordForm" class="report-form" style="max-width: 500px;">
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required minlength="6">
+                    <small class="form-help">Password must be at least 6 characters long</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
         </div>
     </div>
 

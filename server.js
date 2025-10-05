@@ -65,14 +65,40 @@ const requireAdmin = (req, res, next) => {
     }
 };
 
-// Helper function to get current week information
+// Helper function to get current academic week information
+// Academic year: September 2025 - December 19, 2025
 const getCurrentWeekInfo = () => {
     const now = new Date();
-    const weekOfMonth = Math.ceil(now.getDate() / 7);
+    const academicStartDate = new Date('2025-09-01'); // September 1, 2025
+    const academicEndDate = new Date('2025-12-19'); // December 19, 2025
+    
+    // If current date is before academic start, show week 1
+    if (now < academicStartDate) {
+        return {
+            weekNumber: 1,
+            monthYear: 'September 2025'
+        };
+    }
+    
+    // If current date is after academic end, show final week
+    if (now > academicEndDate) {
+        const totalWeeks = Math.ceil((academicEndDate - academicStartDate) / (7 * 24 * 60 * 60 * 1000));
+        return {
+            weekNumber: totalWeeks,
+            monthYear: 'December 2025'
+        };
+    }
+    
+    // Calculate current academic week
+    const timeDiff = now - academicStartDate;
+    const weekNumber = Math.ceil(timeDiff / (7 * 24 * 60 * 60 * 1000));
+    
+    // Determine current month for display
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'];
+    
     return {
-        weekNumber: weekOfMonth,
+        weekNumber: Math.max(1, weekNumber),
         monthYear: `${monthNames[now.getMonth()]} ${now.getFullYear()}`
     };
 };
@@ -301,6 +327,50 @@ app.get('/api/teacher/profile', requireAuth, async (req, res) => {
     } catch (error) {
         console.error('Error fetching teacher profile:', error);
         res.status(500).json({ error: 'Database error' });
+    }
+});
+
+// Change teacher password
+app.post('/api/teacher/change-password', requireAuth, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    
+    // Validate input
+    if (!currentPassword || !newPassword) {
+        return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+    
+    if (newPassword.length < 6) {
+        return res.status(400).json({ error: 'New password must be at least 6 characters long' });
+    }
+    
+    try {
+        // Get current user's password hash
+        const result = await query('SELECT password_hash FROM teachers WHERE id = $1', [req.session.userId]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Teacher not found' });
+        }
+        
+        const user = result.rows[0];
+        
+        // Verify current password
+        const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password_hash);
+        
+        if (!isCurrentPasswordValid) {
+            return res.status(400).json({ error: 'Current password is incorrect' });
+        }
+        
+        // Hash new password
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        
+        // Update password in database
+        await query('UPDATE teachers SET password_hash = $1 WHERE id = $2', [hashedNewPassword, req.session.userId]);
+        
+        res.json({ success: true, message: 'Password changed successfully' });
+        
+    } catch (error) {
+        console.error('Error changing password:', error);
+        res.status(500).json({ error: 'Failed to change password' });
     }
 });
 
