@@ -6,6 +6,7 @@
     <title>Teacher Dashboard - Manforia Reading Tracker</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="cropped-cropped-icon2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 </head>
@@ -17,7 +18,7 @@
         </div>
         <div class="nav-actions">
             <span id="teacherName" class="user-name"></span>
-            <a href="/logout" class="btn btn-secondary">Logout</a>
+            <a href="/logout" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
         <button class="hamburger" id="hamburgerBtn">
             <span></span>
@@ -42,11 +43,11 @@
         </div>
         
         <div class="sidebar-nav">
-            <button class="tab-btn active" onclick="showTabMobile('daily-report')">Daily Report</button>
-            <button class="tab-btn" onclick="showTabMobile('weekly-report')">Weekly Summary</button>
-            <button class="tab-btn" onclick="showTabMobile('my-reports')">My Reports</button>
-            <button class="tab-btn" onclick="showTabMobile('change-password')">Change Password</button>
-            <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;">Logout</a>
+            <button class="tab-btn active" onclick="showTabMobile('daily-report')"><i class="fas fa-calendar-day"></i> Daily Report</button>
+            <button class="tab-btn" onclick="showTabMobile('weekly-report')"><i class="fas fa-calendar-week"></i> Weekly Summary</button>
+            <button class="tab-btn" onclick="showTabMobile('my-reports')"><i class="fas fa-file-alt"></i> My Reports</button>
+            <button class="tab-btn" onclick="showTabMobile('change-password')"><i class="fas fa-key"></i> Change Password</button>
+            <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </div>
 
@@ -85,10 +86,10 @@
         </div>
 
         <div class="dashboard-tabs">
-            <button class="tab-btn active" onclick="showTab('daily-report')">Daily Report</button>
-            <button class="tab-btn" onclick="showTab('weekly-report')">Weekly Summary</button>
-            <button class="tab-btn" onclick="showTab('my-reports')">My Reports</button>
-            <button class="tab-btn" onclick="showTab('change-password')">Change Password</button>
+            <button class="tab-btn active" onclick="showTab('daily-report')"><i class="fas fa-calendar-day"></i> Daily Report</button>
+            <button class="tab-btn" onclick="showTab('weekly-report')"><i class="fas fa-calendar-week"></i> Weekly Summary</button>
+            <button class="tab-btn" onclick="showTab('my-reports')"><i class="fas fa-file-alt"></i> My Reports</button>
+            <button class="tab-btn" onclick="showTab('change-password')"><i class="fas fa-key"></i> Change Password</button>
         </div>
 
         <!-- Daily Report Tab -->
@@ -118,7 +119,7 @@
                     <textarea id="comments" name="comments" rows="4" placeholder="Any observations, student participation, challenges faced, etc..."></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Submit Daily Report</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Daily Report</button>
             </form>
         </div>
 
@@ -149,7 +150,7 @@
                     <textarea id="strategiesNextWeek" name="strategiesNextWeek" rows="3" placeholder="Outline your planned strategies and approaches for next week's reading sessions..." required></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Submit Weekly Summary</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Weekly Summary</button>
             </form>
         </div>
 
@@ -158,8 +159,8 @@
             <div class="section-header">
                 <h2>My Reports</h2>
                 <div class="export-buttons">
-                    <button class="btn btn-primary" onclick="exportMyDailyReportsPDF()">Export Daily Reports PDF</button>
-                    <button class="btn btn-primary" onclick="exportMyWeeklyReportsPDF()">Export Weekly Reports PDF</button>
+                    <button class="btn btn-primary" onclick="exportMyDailyReportsPDF()"><i class="fas fa-file-pdf"></i> Export Daily Reports PDF</button>
+                    <button class="btn btn-primary" onclick="exportMyWeeklyReportsPDF()"><i class="fas fa-file-pdf"></i> Export Weekly Reports PDF</button>
                 </div>
             </div>
             
@@ -227,7 +228,7 @@
                     <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6">
                 </div>
                 
-                <button type="submit" class="btn btn-primary">Change Password</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Change Password</button>
             </form>
         </div>
     </div>
@@ -236,7 +237,7 @@
     <div id="reportModal" class="report-modal">
         <div class="report-modal-content">
             <div class="report-modal-header">
-                <h2><span class="report-icon" id="reportIcon">📋</span><span id="reportTitle">Report Details</span></h2>
+                <h2><span class="report-icon" id="reportIcon"><i class="fas fa-clipboard-list"></i></span><span id="reportTitle">Report Details</span></h2>
                 <button class="report-close" onclick="closeReportModal()">&times;</button>
             </div>
             <div class="report-modal-body">

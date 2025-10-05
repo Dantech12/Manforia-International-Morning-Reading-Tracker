@@ -6,6 +6,7 @@
     <title>Admin Dashboard - Manforia Reading Tracker</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="cropped-cropped-icon2.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -15,7 +16,7 @@
         </div>
         <div class="nav-actions">
             <span id="adminName" class="user-name"></span>
-            <a href="/logout" class="btn btn-secondary">Logout</a>
+            <a href="/logout" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
         <button class="hamburger" id="hamburgerBtn">
             <span></span>
@@ -40,25 +41,25 @@
         </div>
         
         <div class="sidebar-nav">
-            <button class="tab-btn active" onclick="showTabMobile('teachers')">Manage Teachers</button>
-            <button class="tab-btn" onclick="showTabMobile('daily-reports')">Daily Reports</button>
-            <button class="tab-btn" onclick="showTabMobile('weekly-reports')">Weekly Reports</button>
-            <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;">Logout</a>
+            <button class="tab-btn active" onclick="showTabMobile('teachers')"><i class="fas fa-users"></i> Manage Teachers</button>
+            <button class="tab-btn" onclick="showTabMobile('daily-reports')"><i class="fas fa-calendar-day"></i> Daily Reports</button>
+            <button class="tab-btn" onclick="showTabMobile('weekly-reports')"><i class="fas fa-calendar-week"></i> Weekly Reports</button>
+            <a href="/logout" class="btn btn-secondary" style="margin-top: 20px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </div>
 
     <div class="container">
         <div class="dashboard-tabs">
-            <button class="tab-btn active" onclick="showTab('teachers')">Manage Teachers</button>
-            <button class="tab-btn" onclick="showTab('daily-reports')">Daily Reports</button>
-            <button class="tab-btn" onclick="showTab('weekly-reports')">Weekly Reports</button>
+            <button class="tab-btn active" onclick="showTab('teachers')"><i class="fas fa-users"></i> Manage Teachers</button>
+            <button class="tab-btn" onclick="showTab('daily-reports')"><i class="fas fa-calendar-day"></i> Daily Reports</button>
+            <button class="tab-btn" onclick="showTab('weekly-reports')"><i class="fas fa-calendar-week"></i> Weekly Reports</button>
         </div>
 
         <!-- Teachers Management Tab -->
         <div id="teachers-tab" class="tab-content active">
             <div class="section-header">
                 <h2>Manage Teachers</h2>
-                <button class="btn btn-primary" onclick="showAddTeacherModal()">Add New Teacher</button>
+                <button class="btn btn-primary" onclick="showAddTeacherModal()"><i class="fas fa-user-plus"></i> Add New Teacher</button>
             </div>
             
             <div class="table-container">
@@ -81,7 +82,7 @@
         <div id="daily-reports-tab" class="tab-content">
             <div class="section-header">
                 <h2>Daily Reading Reports</h2>
-                <button class="btn btn-primary" onclick="exportDailyReportsPDF()">Export PDF</button>
+                <button class="btn btn-primary" onclick="exportDailyReportsPDF()"><i class="fas fa-file-pdf"></i> Export PDF</button>
             </div>
             
             <div class="table-container">
@@ -107,7 +108,7 @@
         <div id="weekly-reports-tab" class="tab-content">
             <div class="section-header">
                 <h2>Weekly Summary Reports</h2>
-                <button class="btn btn-primary" onclick="exportWeeklyReportsPDF()">Export PDF</button>
+                <button class="btn btn-primary" onclick="exportWeeklyReportsPDF()"><i class="fas fa-file-pdf"></i> Export PDF</button>
             </div>
             
             <div class="table-container">
@@ -161,8 +162,8 @@
                 </div>
                 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeAddTeacherModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add Teacher</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeAddTeacherModal()"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Teacher</button>
                 </div>
             </form>
         </div>
@@ -172,7 +173,7 @@
     <div id="confirmationModal" class="confirmation-modal">
         <div class="confirmation-modal-content">
             <div class="confirmation-modal-header">
-                <span class="icon">⚠️</span>
+                <span class="icon"><i class="fas fa-exclamation-triangle"></i></span>
                 <h3>Confirm Deletion</h3>
             </div>
             <div class="confirmation-modal-body">
@@ -184,8 +185,8 @@
                 <p style="color: var(--error); font-weight: 500;">This action cannot be undone!</p>
             </div>
             <div class="confirmation-modal-actions">
-                <button class="btn-cancel" onclick="closeConfirmationModal()">Cancel</button>
-                <button class="btn-confirm" onclick="confirmDeleteTeacher()">Delete</button>
+                <button class="btn-cancel" onclick="closeConfirmationModal()"><i class="fas fa-times"></i> Cancel</button>
+                <button class="btn-confirm" onclick="confirmDeleteTeacher()"><i class="fas fa-trash"></i> Delete</button>
             </div>
         </div>
     </div>
@@ -194,7 +195,7 @@
     <div id="reportModal" class="report-modal">
         <div class="report-modal-content">
             <div class="report-modal-header">
-                <h2><span class="report-icon" id="reportIcon">📋</span><span id="reportTitle">Report Details</span></h2>
+                <h2><span class="report-icon" id="reportIcon"><i class="fas fa-clipboard-list"></i></span><span id="reportTitle">Report Details</span></h2>
                 <button class="report-close" onclick="closeReportModal()">&times;</button>
             </div>
             <div class="report-modal-body">

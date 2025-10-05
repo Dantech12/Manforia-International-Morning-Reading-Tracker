@@ -602,8 +602,10 @@ body {
 }
 
 .btn-edit::before {
-    content: "✏️";
-    font-size: 22px;
+    content: "\f044";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
 }
 
 .btn-delete {
@@ -618,8 +620,10 @@ body {
 }
 
 .btn-delete::before {
-    content: "🗑️";
-    font-size: 22px;
+    content: "\f2ed";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
 }
 
 /* Modal Styles */
@@ -953,8 +957,10 @@ body {
 }
 
 .btn-view-report::before {
-    content: "📄";
-    font-size: 14px;
+    content: "\f06e";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 6px;
 }
 
 .modal-content {
@@ -1217,4 +1223,37 @@ body {
     color: var(--gray-medium);
     margin-top: 4px;
     font-style: italic;
+}
+
+/* Font Awesome icon styling */
+.fas, .far, .fab {
+    margin-right: 8px;
+}
+
+/* Icon spacing for buttons */
+.btn i {
+    margin-right: 6px;
+}
+
+/* Tab button icon spacing */
+.tab-btn i {
+    margin-right: 8px;
+}
+
+/* Report section title icons */
+.report-section-title i {
+    margin-right: 8px;
+    color: var(--wine-primary);
+}
+
+/* Modal header icons */
+.report-icon i {
+    margin-right: 8px;
+    color: var(--wine-primary);
+}
+
+/* Confirmation modal icon */
+.confirmation-modal-header .icon i {
+    color: var(--warning);
+    font-size: 24px;
 }

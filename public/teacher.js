@@ -327,7 +327,7 @@ function viewMyDailyReport(index) {
     const report = myDailyReports[index];
     
     // Set modal title and icon
-    document.getElementById('reportIcon').textContent = '📋';
+    document.getElementById('reportIcon').innerHTML = '<i class="fas fa-clipboard-list"></i>';
     document.getElementById('reportTitle').textContent = 'My Daily Reading Report';
     
     // Create info grid
@@ -356,7 +356,7 @@ function viewMyDailyReport(index) {
     contentSections.innerHTML = `
         <div class="report-content-section">
             <div class="report-section-title">
-                📚 Materials Used
+                <i class="fas fa-book"></i> Materials Used
             </div>
             <div class="report-section-content">
                 ${report.materials_used || '<div class="empty">No materials specified</div>'}
@@ -366,7 +366,7 @@ function viewMyDailyReport(index) {
         ${report.new_words ? `
         <div class="report-content-section">
             <div class="report-section-title">
-                📝 New Words Learned
+                <i class="fas fa-pencil-alt"></i> New Words Learned
             </div>
             <div class="report-section-content">
                 ${report.new_words}
@@ -377,7 +377,7 @@ function viewMyDailyReport(index) {
         ${report.comments ? `
         <div class="report-content-section">
             <div class="report-section-title">
-                💭 Teacher Comments
+                <i class="fas fa-comment"></i> Teacher Comments
             </div>
             <div class="report-section-content">
                 ${report.comments}
@@ -399,7 +399,7 @@ function viewMyWeeklyReport(index) {
     const report = myWeeklyReports[index];
     
     // Set modal title and icon
-    document.getElementById('reportIcon').textContent = '📊';
+    document.getElementById('reportIcon').innerHTML = '<i class="fas fa-chart-bar"></i>';
     document.getElementById('reportTitle').textContent = 'My Weekly Summary Report';
     
     // Create info grid
@@ -428,7 +428,7 @@ function viewMyWeeklyReport(index) {
     contentSections.innerHTML = `
         <div class="report-content-section">
             <div class="report-section-title">
-                🌟 Active Readers
+                <i class="fas fa-star"></i> Active Readers
             </div>
             <div class="report-section-content">
                 ${report.active_readers || '<div class="empty">No information provided</div>'}
@@ -437,7 +437,7 @@ function viewMyWeeklyReport(index) {
         
         <div class="report-content-section">
             <div class="report-section-title">
-                🆘 Students Needing Support
+                <i class="fas fa-hands-helping"></i> Students Needing Support
             </div>
             <div class="report-section-content">
                 ${report.students_needing_support || '<div class="empty">No information provided</div>'}
@@ -446,7 +446,7 @@ function viewMyWeeklyReport(index) {
         
         <div class="report-content-section">
             <div class="report-section-title">
-                ⚠️ Common Challenges
+                <i class="fas fa-exclamation-triangle"></i> Common Challenges
             </div>
             <div class="report-section-content">
                 ${report.common_challenges || '<div class="empty">No challenges reported</div>'}
@@ -455,7 +455,7 @@ function viewMyWeeklyReport(index) {
         
         <div class="report-content-section">
             <div class="report-section-title">
-                🎯 Strategies for Next Week
+                <i class="fas fa-bullseye"></i> Strategies for Next Week
             </div>
             <div class="report-section-content">
                 ${report.strategies_next_week || '<div class="empty">No strategies specified</div>'}
