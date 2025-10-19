@@ -178,6 +178,8 @@ async function handleWeeklyReportSubmission(e) {
     
     const formData = new FormData(e.target);
     const reportData = {
+        weekNumber: teacherProfile.currentWeek,
+        monthYear: teacherProfile.monthYear,
         activeReaders: formData.get('activeReaders'),
         studentsNeedingSupport: formData.get('studentsNeedingSupport'),
         commonChallenges: formData.get('commonChallenges'),
