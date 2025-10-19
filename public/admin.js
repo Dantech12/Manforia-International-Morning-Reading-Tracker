@@ -3,6 +3,13 @@ let teachers = [];
 let dailyReports = [];
 let weeklyReports = [];
 
+// Sorting state
+let sortState = {
+    teachers: { column: null, direction: 'asc' },
+    daily: { column: null, direction: 'asc' },
+    weekly: { column: null, direction: 'asc' }
+};
+
 // Initialize the admin dashboard
 document.addEventListener('DOMContentLoaded', function() {
     loadTeachers();
@@ -18,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize mobile navigation
     initializeMobileNavigation();
+    
+    // Initialize table sorting
+    initializeTableSorting();
 });
 
 // Initialize mobile navigation
@@ -96,6 +106,96 @@ function showTabMobile(tabName) {
     mobileSidebar.classList.remove('active');
     mobileOverlay.classList.remove('active');
     document.body.style.overflow = '';
+}
+
+// Initialize table sorting
+function initializeTableSorting() {
+    document.querySelectorAll('.sortable').forEach(header => {
+        header.style.cursor = 'pointer';
+        header.addEventListener('click', function() {
+            const column = this.dataset.column;
+            const table = this.dataset.table;
+            sortTable(table, column);
+        });
+    });
+}
+
+// Sort table data
+function sortTable(table, column) {
+    const state = sortState[table];
+    
+    // Toggle direction if same column, otherwise reset to ascending
+    if (state.column === column) {
+        state.direction = state.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+        state.column = column;
+        state.direction = 'asc';
+    }
+    
+    // Sort the appropriate data array
+    if (table === 'teachers') {
+        sortData(teachers, column, state.direction);
+        displayTeachers();
+    } else if (table === 'daily') {
+        sortData(dailyReports, column, state.direction);
+        displayDailyReports();
+    } else if (table === 'weekly') {
+        sortData(weeklyReports, column, state.direction);
+        displayWeeklyReports();
+    }
+    
+    // Update sort icons
+    updateSortIcons(table, column, state.direction);
+}
+
+// Generic sorting function
+function sortData(data, column, direction) {
+    data.sort((a, b) => {
+        let aVal = a[column];
+        let bVal = b[column];
+        
+        // Handle null/undefined values
+        if (aVal == null) aVal = '';
+        if (bVal == null) bVal = '';
+        
+        // Convert to appropriate types for comparison
+        if (column.includes('date') || column === 'submitted_at' || column === 'created_at') {
+            aVal = new Date(aVal);
+            bVal = new Date(bVal);
+        } else if (column === 'week_number') {
+            aVal = parseInt(aVal) || 0;
+            bVal = parseInt(bVal) || 0;
+        } else {
+            aVal = String(aVal).toLowerCase();
+            bVal = String(bVal).toLowerCase();
+        }
+        
+        // Compare values
+        if (aVal < bVal) return direction === 'asc' ? -1 : 1;
+        if (aVal > bVal) return direction === 'asc' ? 1 : -1;
+        return 0;
+    });
+}
+
+// Update sort icons
+function updateSortIcons(table, column, direction) {
+    // Get all headers for this table
+    const headers = document.querySelectorAll(`[data-table="${table}"]`);
+    
+    headers.forEach(header => {
+        const icon = header.querySelector('i');
+        if (!icon) return;
+        
+        if (header.dataset.column === column) {
+            // Active sort column
+            icon.className = direction === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
+            header.style.color = 'var(--primary)';
+        } else {
+            // Inactive columns
+            icon.className = 'fas fa-sort';
+            header.style.color = '';
+        }
+    });
 }
 
 // Load teachers data

@@ -507,6 +507,33 @@ body {
     font-size: 14px;
 }
 
+/* Sortable table headers */
+.data-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.data-table th.sortable:hover {
+    background-color: var(--wine-secondary);
+}
+
+.data-table th.sortable i {
+    margin-left: 5px;
+    font-size: 12px;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+}
+
+.data-table th.sortable:hover i {
+    opacity: 1;
+}
+
+.data-table th.sortable.active {
+    background-color: var(--wine-secondary);
+}
+
 .data-table td {
     padding: 12px;
     border-bottom: 1px solid var(--gray-light);

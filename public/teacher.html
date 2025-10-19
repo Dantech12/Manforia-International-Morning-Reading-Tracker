@@ -170,11 +170,11 @@
                     <table id="myDailyReportsTable" class="data-table">
                         <thead>
                             <tr>
-                                <th>Date</th>
+                                <th class="sortable" data-column="report_date" data-table="myDaily">Date <i class="fas fa-sort"></i></th>
                                 <th>Materials Used</th>
                                 <th>New Words</th>
                                 <th>Comments</th>
-                                <th>Week</th>
+                                <th class="sortable" data-column="week_number" data-table="myDaily">Week <i class="fas fa-sort"></i></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -189,8 +189,8 @@
                     <table id="myWeeklyReportsTable" class="data-table">
                         <thead>
                             <tr>
-                                <th>Submitted</th>
-                                <th>Week</th>
+                                <th class="sortable" data-column="submitted_at" data-table="myWeekly">Submitted <i class="fas fa-sort"></i></th>
+                                <th class="sortable" data-column="week_number" data-table="myWeekly">Week <i class="fas fa-sort"></i></th>
                                 <th>Active Readers</th>
                                 <th>Support Needed</th>
                                 <th>Challenges</th>
